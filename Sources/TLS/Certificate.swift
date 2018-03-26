@@ -10,13 +10,12 @@
 
 import Stream
 
-extension UnsafeStreamReader {
+extension StreamReader {
     func read(_ type: UInt24.Type) throws -> UInt24 {
         var value = UInt24(0)
-        try withUnsafeMutableBytes(of: &value) { bytes in
-            let buffer = try read(count: MemoryLayout<UInt24>.size)
-            guard buffer.count == MemoryLayout<UInt24>.size else {
-                throw StreamError.insufficientData
+        try withUnsafeMutableBytes(of: &value) { buffer in
+            try read(count: MemoryLayout<UInt24>.size) { bytes in
+                buffer.copyMemory(from: bytes)
             }
         }
         return value
@@ -30,7 +29,7 @@ extension InputByteStream {
 }
 
 extension Array where Element == Certificate {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt24.self).byteSwapped)
         // TODO: avoid copying, plaease read NOTE in this extension
         let stream = try InputByteStream(from: stream, byteCount: length)
@@ -46,7 +45,8 @@ extension Array where Element == Certificate {
 
 struct Certificate: Equatable {
     fileprivate static let headerSize = 3
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         fatalError("not implemented")
+        // let length = Int(buffer[0]) << 16 | Int(buffer[1]) << 8 | Int(buffer[2])
     }
 }

@@ -11,7 +11,7 @@
 import Stream
 
 extension Array where Element == Extension {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt16.self).byteSwapped)
         // TODO: avoid copying, plaease read NOTE in this extension
         let stream = try InputByteStream(from: stream, byteCount: length)
@@ -34,7 +34,7 @@ enum Extension: Equatable {
     case heartbeat(Heartbeat)
     case renegotiationInfo(RenegotiationInfo)
 
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawType = try stream.read(UInt16.self).byteSwapped
         let length = Int(try stream.read(UInt16.self).byteSwapped)
 

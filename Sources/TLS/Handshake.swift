@@ -49,7 +49,7 @@ extension Handshake {
 }
 
 extension Handshake.RawType {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawType = try stream.read(UInt8.self)
         guard let type = Handshake.RawType(rawValue: rawType) else {
             throw TLSError.invalidHandshake
@@ -59,7 +59,7 @@ extension Handshake.RawType {
 }
 
 extension Handshake {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let type = try RawType(from: stream)
         let length = Int(try stream.read(UInt24.self).byteSwapped)
 

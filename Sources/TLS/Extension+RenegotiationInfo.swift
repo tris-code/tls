@@ -21,7 +21,7 @@ extension Extension {
 }
 
 extension Extension.RenegotiationInfo {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = try stream.read(UInt8.self)
 
         guard length > 0 else {

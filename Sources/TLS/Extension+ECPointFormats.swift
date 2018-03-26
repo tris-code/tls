@@ -23,7 +23,7 @@ extension Extension {
 }
 
 extension Extension.ECPointFormats {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt8.self))
 
         var points = [ECPoint]()

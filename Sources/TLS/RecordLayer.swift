@@ -39,7 +39,7 @@ extension RecordLayer {
 }
 
 extension RecordLayer.ContentType {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawType = try stream.read(UInt8.self)
         guard let type = RecordLayer.ContentType(rawValue: rawType) else {
             throw TLSError.invalidRecordContentType
@@ -49,7 +49,7 @@ extension RecordLayer.ContentType {
 }
 
 extension RecordLayer {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let type = try ContentType(from: stream)
 
         self.version = try ProtocolVersion(from: stream)
@@ -67,8 +67,7 @@ extension RecordLayer {
             self.content = .handshake(try Handshake(from: stream))
 
         case .applicationData:
-            let buffer = try stream.read(count: length)
-            self.content = .applicationData([UInt8](buffer))
+            self.content = .applicationData(try stream.read(count: length))
 
         case .heartbeat:
             self.content = .heartbeat

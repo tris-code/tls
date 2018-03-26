@@ -28,8 +28,8 @@ extension Random {
 }
 
 extension Random {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         self.time = Int(try stream.read(UInt32.self).byteSwapped)
-        self.bytes = [UInt8](try stream.read(count: 28))
+        self.bytes = try stream.read(count: 28)
     }
 }

@@ -17,14 +17,13 @@ extension Extension {
 }
 
 extension Extension.SessionTicket {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
-        let buffer = try stream.readAllBytes()
-        self.data = [UInt8](buffer)
+    init<T: StreamReader>(from stream: T) throws {
+        self.data = try stream.readAllBytes()
     }
 }
 
-extension UnsafeStreamReader {
-    func readAllBytes() throws -> UnsafeRawBufferPointer {
+extension StreamReader {
+    func readAllBytes() throws -> [UInt8] {
         return try read(while: { _ in true }, allowingExhaustion: true)
     }
 }

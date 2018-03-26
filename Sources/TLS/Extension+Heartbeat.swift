@@ -20,7 +20,7 @@ extension Extension {
 }
 
 extension Extension.Heartbeat {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawMode = try stream.read(UInt8.self)
         guard let mode = Mode(rawValue: rawMode) else {
             throw TLSError.invalidExtension

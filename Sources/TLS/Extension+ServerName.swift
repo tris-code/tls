@@ -25,24 +25,22 @@ extension Extension {
 }
 
 extension Extension.ServerName.Name {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawType = try stream.read(UInt8.self)
         guard let type = NameType(rawValue: rawType) else {
             throw TLSError.invalidExtension
         }
+        self.type = type
 
         let length = Int(try stream.read(UInt16.self).byteSwapped)
-
-        let bytes = [UInt8](try stream.read(count: length))
-        let value = String(decoding: bytes, as: UTF8.self)
-
-        self.type = type
-        self.value = value
+        self.value = try stream.read(count: length) { bytes in
+            return String(decoding: bytes, as: UTF8.self)
+        }
     }
 }
 
 extension Extension.ServerName {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let uint = try stream.read(UInt16.self).byteSwapped
         let length = Int(uint)
         // TODO: avoid copying, plaease read NOTE in this extension

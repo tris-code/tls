@@ -57,7 +57,7 @@ extension Alert {
 }
 
 extension Alert {
-    public init<T: UnsafeStreamReader>(from stream: T) throws {
+    public init<T: StreamReader>(from stream: T) throws {
         let rawLevel = try stream.read(UInt8.self)
         let rawDescription = try stream.read(UInt8.self)
 

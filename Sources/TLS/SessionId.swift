@@ -15,7 +15,7 @@ struct SessionId: Equatable {
 }
 
 extension SessionId {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt8.self))
 
         guard length > 0 else {
@@ -23,7 +23,6 @@ extension SessionId {
             return
         }
 
-        let buffer = try stream.read(count: length)
-        self.data = [UInt8](buffer)
+        self.data = try stream.read(count: length)
     }
 }

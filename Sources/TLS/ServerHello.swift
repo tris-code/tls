@@ -33,7 +33,7 @@ extension ServerHello {
 }
 
 extension ServerHello {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         self.random = try Random(from: stream)
         self.sessionId = try SessionId(from: stream)
         self.ciperSuite = try CiperSuite(from: stream)

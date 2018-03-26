@@ -15,7 +15,7 @@ enum CompressionMethod: UInt8 {
 }
 
 extension Array where Element == CompressionMethod {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt8.self))
 
         var methods: [CompressionMethod] = []
@@ -30,7 +30,7 @@ extension Array where Element == CompressionMethod {
 }
 
 extension CompressionMethod {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawMethod = try stream.read(UInt8.self)
         guard let method = CompressionMethod(rawValue: rawMethod) else {
             throw TLSError.invalidCompressionMethod

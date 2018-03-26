@@ -22,7 +22,7 @@ extension Extension {
 }
 
 extension Extension.StatusRequest {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawStatus = try stream.read(UInt8.self)
         let responderIdListlength = Int(try stream.read(UInt16.self).byteSwapped)
         let requestExtensionsLength = Int(try stream.read(UInt16.self).byteSwapped)

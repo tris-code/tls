@@ -20,7 +20,7 @@ struct ClientHello: Equatable {
 }
 
 extension ClientHello {
-    public init<T: UnsafeStreamReader>(from stream: T) throws {
+    public init<T: StreamReader>(from stream: T) throws {
         self.version = try ProtocolVersion(from: stream)
         self.random = try Random(from: stream)
         self.sessionId = try SessionId(from: stream)

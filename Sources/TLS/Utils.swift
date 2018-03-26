@@ -13,25 +13,9 @@ import Stream
 extension InputByteStream {
     // NOTE:
     // maybe we should add something like:
-    // <UnsafeStreamReader>.setMaxInputBytes(count: )
+    // <StreamReader>.setMaxInputBytes(count: )
     convenience
-    init<T: UnsafeStreamReader>(from stream: T, byteCount: Int) throws {
-        let buffer = try stream.read(count: byteCount)
-        self.init([UInt8](buffer))
-    }
-}
-
-extension UnsafeStreamReader {
-    @inline(__always)
-    public func read<T: BinaryInteger>(_ type: T.Type) throws -> T {
-        var result: T = 0
-        try withUnsafeMutableBytes(of: &result) { bytes in
-            let buffer = try read(count: MemoryLayout<T>.size)
-            guard buffer.count == MemoryLayout<T>.size else {
-                throw StreamError.insufficientData
-            }
-            bytes.copyMemory(from: buffer)
-        }
-        return result
+    init<T: StreamReader>(from stream: T, byteCount: Int) throws {
+        self.init(try stream.read(count: byteCount))
     }
 }

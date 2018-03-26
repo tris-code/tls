@@ -11,7 +11,7 @@
 import Stream
 
 extension Array where Element == CiperSuite {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt16.self).byteSwapped)
         guard length % 2 == 0 else {
             throw TLSError.invalidCiperSuitesLength
@@ -28,7 +28,7 @@ extension Array where Element == CiperSuite {
 }
 
 extension CiperSuite {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawCiperSuite = try stream.read(UInt16.self).byteSwapped
         guard let ciperSuite = CiperSuite(rawValue: rawCiperSuite) else {
             throw TLSError.invalidCiperSuite

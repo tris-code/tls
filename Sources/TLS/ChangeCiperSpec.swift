@@ -15,7 +15,7 @@ enum ChangeCiperSpec: UInt8 {
 }
 
 extension ChangeCiperSpec {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawSpec = try stream.read(UInt8.self)
         guard let spec = ChangeCiperSpec(rawValue: rawSpec) else {
             throw TLSError.invalidChangeCiperSpec

@@ -58,7 +58,7 @@ extension Extension {
 }
 
 extension Extension.SupportedGroups {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt16.self).byteSwapped)
 
         var groups = [Group]()

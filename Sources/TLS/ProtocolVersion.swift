@@ -26,7 +26,7 @@ extension ProtocolVersion {
 }
 
 extension ProtocolVersion {
-    init<T: UnsafeStreamReader>(from stream: T) throws {
+    init<T: StreamReader>(from stream: T) throws {
         let rawVersion = try stream.read(UInt16.self).byteSwapped
         guard let version = ProtocolVersion(rawValue: rawVersion) else {
             throw TLSError.invalidProtocolVerion
