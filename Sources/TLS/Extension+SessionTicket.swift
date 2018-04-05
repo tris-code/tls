@@ -18,12 +18,6 @@ extension Extension {
 
 extension Extension.SessionTicket {
     init<T: StreamReader>(from stream: T) throws {
-        self.data = try stream.readAllBytes()
-    }
-}
-
-extension StreamReader {
-    func readAllBytes() throws -> [UInt8] {
-        return try read(while: { _ in true }, allowingExhaustion: true)
+        self.data = try stream.readUntilEnd()
     }
 }
