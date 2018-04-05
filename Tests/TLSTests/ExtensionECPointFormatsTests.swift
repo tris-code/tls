@@ -13,7 +13,7 @@ import Stream
 @testable import TLS
 
 class ExtensionECPointFormatsTests: TestCase {
-    func testExtensionECPointFormats() {
+    func testDecode() {
         scope {
             let stream = InputByteStream([0x03, 0x00, 0x01, 0x02])
             let result = try Extension.ECPointFormats(from: stream)
@@ -24,7 +24,7 @@ class ExtensionECPointFormatsTests: TestCase {
         }
     }
 
-    func testExtensionECPointFormatsType() {
+    func testDecodeExtension() {
         scope {
             let stream = InputByteStream(
                 [0x00, 0x0b, 0x00, 0x04, 0x03, 0x00, 0x01, 0x02])
@@ -33,6 +33,33 @@ class ExtensionECPointFormatsTests: TestCase {
                 .uncompressed,
                 .ansiX962_compressed_prime,
                 .ansiX962_compressed_char2])))
+        }
+    }
+
+    func testEncode() {
+        scope {
+            let stream = OutputByteStream()
+            let expected: [UInt8] = [0x03, 0x00, 0x01, 0x02]
+            let formats = Extension.ECPointFormats(values: [
+                .uncompressed,
+                .ansiX962_compressed_prime,
+                .ansiX962_compressed_char2])
+            try formats.encode(to: stream)
+            assertEqual(stream.bytes, expected)
+        }
+    }
+
+    func testEncodeExtension() {
+        scope {
+            let stream = OutputByteStream()
+            let expected: [UInt8] =
+                [0x00, 0x0b, 0x00, 0x04, 0x03, 0x00, 0x01, 0x02]
+            let formatsExtension = Extension.ecPointFormats(.init(values: [
+                .uncompressed,
+                .ansiX962_compressed_prime,
+                .ansiX962_compressed_char2]))
+            try formatsExtension.encode(to: stream)
+            assertEqual(stream.bytes, expected)
         }
     }
 }

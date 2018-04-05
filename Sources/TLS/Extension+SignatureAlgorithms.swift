@@ -47,13 +47,24 @@ extension Extension.SignatureAlgorithms {
         while remain > 0 {
             let rawHash = try stream.read(UInt8.self)
             let rawSignature = try stream.read(UInt8.self)
-            guard let hash = Algorithm.HashType(rawValue: rawHash),
-                let signature = Algorithm.SignatureType(rawValue: rawSignature) else {
-                    throw TLSError.invalidExtension
+            guard
+                let hash = Algorithm.HashType(rawValue: rawHash),
+                let signature = Algorithm.SignatureType(rawValue: rawSignature)
+            else {
+                throw TLSError.invalidExtension
             }
             algorithms.append(Algorithm(hash: hash, signature: signature))
             remain -= MemoryLayout<UInt8>.size + MemoryLayout<UInt8>.size
         }
         self.values = algorithms
+    }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        try stream.countingLength(as: UInt16.self) { stream in
+            for value in values {
+                try stream.write(value.hash.rawValue)
+                try stream.write(value.signature.rawValue)
+            }
+        }
     }
 }
