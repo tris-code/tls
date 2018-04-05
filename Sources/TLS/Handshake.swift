@@ -63,15 +63,14 @@ extension Handshake {
         let type = try RawType(from: stream)
         let length = Int(try stream.read(UInt24.self).byteSwapped)
 
-        // TODO: avoid copying, plaease read NOTE in this extension
-        let stream = try InputByteStream(from: stream, byteCount: length)
-
-        switch type {
-        case .clientHello: self = .clientHello(try ClientHello(from: stream))
-        case .serverHello: self = .serverHello(try ServerHello(from: stream))
-        case .certificate: self = .certificate(try [Certificate](from: stream))
-        case .serverHelloDone: self = .serverHelloDone
-        default: throw TLSError.invalidHandshake
+        self = try stream.withLimitedStream(by: length) { stream in
+            switch type {
+            case .clientHello: return .clientHello(try ClientHello(from: stream))
+            case .serverHello: return .serverHello(try ServerHello(from: stream))
+            case .certificate: return .certificate(try [Certificate](from: stream))
+            case .serverHelloDone: return .serverHelloDone
+            default: throw TLSError.invalidHandshake
+            }
         }
     }
 }

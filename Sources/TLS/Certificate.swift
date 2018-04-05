@@ -14,35 +14,16 @@ public struct Certificate: Equatable {
 
 }
 
-extension StreamReader {
-    func read(_ type: UInt24.Type) throws -> UInt24 {
-        var value = UInt24(0)
-        try withUnsafeMutableBytes(of: &value) { buffer in
-            try read(count: MemoryLayout<UInt24>.size) { bytes in
-                buffer.copyMemory(from: bytes)
-            }
-        }
-        return value
-    }
-}
-
-extension InputByteStream {
-    var isEmpty: Bool {
-        return position == bytes.count
-    }
-}
-
 extension Array where Element == Certificate {
     init<T: StreamReader>(from stream: T) throws {
         let length = Int(try stream.read(UInt24.self).byteSwapped)
-        // TODO: avoid copying, plaease read NOTE in this extension
-        let stream = try InputByteStream(from: stream, byteCount: length)
-
-        var certificates = [Certificate]()
-        while !stream.isEmpty {
-            certificates.append(try Certificate(from: stream))
+        self = try stream.withLimitedStream(by: length) { stream in
+            var certificates = [Certificate]()
+            while !stream.isEmpty {
+                certificates.append(try Certificate(from: stream))
+            }
+            return certificates
         }
-        self = certificates
     }
 }
 

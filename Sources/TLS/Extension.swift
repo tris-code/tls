@@ -10,20 +10,6 @@
 
 import Stream
 
-extension Array where Element == Extension {
-    init<T: StreamReader>(from stream: T) throws {
-        let length = Int(try stream.read(UInt16.self).byteSwapped)
-        // TODO: avoid copying, plaease read NOTE in this extension
-        let stream = try InputByteStream(from: stream, byteCount: length)
-
-        var extensions = [Extension]()
-        while !stream.isEmpty {
-            extensions.append(try Extension(from: stream))
-        }
-        self = extensions
-    }
-}
-
 public enum Extension: Equatable {
     case serverName(ServerName)
     case supportedGroups(SupportedGroups)
@@ -33,7 +19,22 @@ public enum Extension: Equatable {
     case statusRequest(StatusRequest)
     case heartbeat(Heartbeat)
     case renegotiationInfo(RenegotiationInfo)
+}
 
+extension Array where Element == Extension {
+    init<T: StreamReader>(from stream: T) throws {
+        let length = Int(try stream.read(UInt16.self).byteSwapped)
+        self = try stream.withLimitedStream(by: length) { stream in
+            var extensions = [Extension]()
+            while !stream.isEmpty {
+                extensions.append(try Extension(from: stream))
+            }
+            return extensions
+        }
+    }
+}
+
+extension Extension {
     init<T: StreamReader>(from stream: T) throws {
         let rawType = try stream.read(UInt16.self).byteSwapped
         let length = Int(try stream.read(UInt16.self).byteSwapped)
@@ -51,7 +52,7 @@ public enum Extension: Equatable {
                 self = .supportedGroups(SupportedGroups(values: []))
             case .ecPointFormats:
                 self = .ecPointFormats(ECPointFormats(values: []))
-            case .sessionTicketTLS:
+            case .sessionTicket:
                 self = .sessionTicket(SessionTicket(data: []))
             case .signatureAlgorithms:
                 self = .signatureAlgorithms(SignatureAlgorithms(values: []))
@@ -67,28 +68,27 @@ public enum Extension: Equatable {
             return
         }
 
-        // TODO: avoid copying, plaease read NOTE in this extension
-        let stream = try InputByteStream(from: stream, byteCount: length)
-
-        switch type {
-        case .serverName:
-            self = .serverName(try ServerName(from: stream))
-        case .supportedGroups:
-            self = .supportedGroups(try SupportedGroups(from: stream))
-        case .ecPointFormats:
-            self = .ecPointFormats(try ECPointFormats(from: stream))
-        case .sessionTicketTLS:
-            self = .sessionTicket(try SessionTicket(from: stream))
-        case .signatureAlgorithms:
-            self = .signatureAlgorithms(try SignatureAlgorithms(from: stream))
-        case .statusRequest:
-            self = .statusRequest(try StatusRequest(from: stream))
-        case .heartbeat:
-            self = .heartbeat(try Heartbeat(from: stream))
-        case .renegotiationInfo:
-            self = .renegotiationInfo(try RenegotiationInfo(from: stream))
-        default:
-            throw TLSError.invalidExtension
+        self = try stream.withLimitedStream(by: length) { stream in
+            switch type {
+            case .serverName:
+                return .serverName(try ServerName(from: stream))
+            case .supportedGroups:
+                return .supportedGroups(try SupportedGroups(from: stream))
+            case .ecPointFormats:
+                return .ecPointFormats(try ECPointFormats(from: stream))
+            case .sessionTicket:
+                return .sessionTicket(try SessionTicket(from: stream))
+            case .signatureAlgorithms:
+                return .signatureAlgorithms(try SignatureAlgorithms(from: stream))
+            case .statusRequest:
+                return .statusRequest(try StatusRequest(from: stream))
+            case .heartbeat:
+                return .heartbeat(try Heartbeat(from: stream))
+            case .renegotiationInfo:
+                return .renegotiationInfo(try RenegotiationInfo(from: stream))
+            default:
+                throw TLSError.invalidExtension
+            }
         }
     }
 }
@@ -121,7 +121,7 @@ extension Extension {
         case extendedMasterSecret = 0x0017
         case tokenBinding = 0x0018 // (TEMPORARY - registered 2016-02-04, expires 2017-02-04)
         case cachedInfo  = 0x0019
-        case sessionTicketTLS = 0x0023
+        case sessionTicket = 0x0023
         case renegotiationInfo = 0xFF01
     }
 }

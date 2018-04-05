@@ -50,15 +50,14 @@ extension Extension.ServerName.Name {
 
 extension Extension.ServerName {
     init<T: StreamReader>(from stream: T) throws {
-        let uint = try stream.read(UInt16.self).byteSwapped
-        let length = Int(uint)
-        // TODO: avoid copying, plaease read NOTE in this extension
-        let stream = try InputByteStream(from: stream, byteCount: length)
+        let length = Int(try stream.read(UInt16.self).byteSwapped)
 
-        var names = [Name]()
-        while !stream.isEmpty {
-            names.append(try Name(from: stream))
+        self.values = try stream.withLimitedStream(by: length) { stream in
+            var names = [Name]()
+            while !stream.isEmpty {
+                names.append(try Name(from: stream))
+            }
+            return names
         }
-        self.values = names
     }
 }

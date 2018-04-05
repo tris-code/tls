@@ -55,24 +55,19 @@ extension RecordLayer {
         self.version = try ProtocolVersion(from: stream)
 
         let length = Int(try stream.read(UInt16.self).byteSwapped)
-        // TODO: avoid copying, plaease read NOTE in this extension
-        let stream = try InputByteStream(from: stream, byteCount: length)
-
-        switch type {
-        case .changeChiperSpec:
-            self.content = .changeChiperSpec(try ChangeCiperSpec(from: stream))
-
-        case .alert:
-            self.content = .alert(try Alert(from: stream))
-
-        case .handshake:
-            self.content = .handshake(try Handshake(from: stream))
-
-        case .applicationData:
-            self.content = .applicationData(try stream.read(count: length))
-
-        case .heartbeat:
-            self.content = .heartbeat
+        self.content = try stream.withLimitedStream(by: length) { stream in
+            switch type {
+            case .changeChiperSpec:
+                return .changeChiperSpec(try ChangeCiperSpec(from: stream))
+            case .alert:
+                return .alert(try Alert(from: stream))
+            case .handshake:
+                return .handshake(try Handshake(from: stream))
+            case .applicationData:
+                return .applicationData(try stream.read(count: length))
+            case .heartbeat:
+                return .heartbeat
+            }
         }
     }
 }
