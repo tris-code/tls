@@ -13,6 +13,9 @@ import PackageDescription
 
 let package = Package(
     name: "TLS",
+    products: [
+        .library(name: "TLS", targets: ["TLS"])
+    ],
     dependencies: [
         .package(
             url: "https://github.com/tris-foundation/platform.git",
