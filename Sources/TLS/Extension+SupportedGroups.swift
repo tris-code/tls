@@ -42,8 +42,8 @@ extension Extension {
             case brainpoolP256r1 = 0x001a
             case brainpoolP384r1 = 0x001b
             case brainpoolP512r1 = 0x001c
-            case ecdh_x25519 = 0x001d // (TEMPORARY - registered 2016-02-29, expires 2017-03-01)
-            case ecdh_x448 = 0x001e // (TEMPORARY - registered 2016-02-29, expires 2017-03-01)
+            case x25519 = 0x001d // [draft-tls13][RFC-ietf-tls-rfc4492bis-17]
+            case x448 = 0x001e // [draft-tls13][RFC-ietf-tls-rfc4492bis-17]
             case ffdhe2048 = 0x0100
             case ffdhe3072 = 0x0101
             case ffdhe4096 = 0x0102
