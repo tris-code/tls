@@ -11,11 +11,11 @@
 import Stream
 
 extension Extension {
-    struct SignatureAlgorithms: Equatable {
-        let values: [Algorithm]
+    public struct SignatureAlgorithms: Equatable {
+        public let values: [Algorithm]
 
-        struct Algorithm: Equatable {
-            enum HashType: UInt8 {
+        public struct Algorithm: Equatable {
+            public enum HashType: UInt8 {
                 case none   = 0x00
                 case md5    = 0x01
                 case sha1   = 0x02
@@ -25,15 +25,15 @@ extension Extension {
                 case sha512 = 0x06
             }
 
-            enum SignatureType: UInt8 {
+            public enum SignatureType: UInt8 {
                 case anonymous = 0x00
                 case rsa       = 0x01
                 case dsa       = 0x02
                 case ecdsa     = 0x03
             }
 
-            let hash: HashType
-            let signature: SignatureType
+            public let hash: HashType
+            public let signature: SignatureType
         }
     }
 }

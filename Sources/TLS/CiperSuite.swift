@@ -10,7 +10,7 @@
 
 // http://www.iana.org/assignments/tls-parameters/tls-parameters.txt
 
-enum CiperSuite: UInt16 {
+public enum CiperSuite: UInt16 {
     case tls_null_with_null_null = 0x0000
     case tls_rsa_with_null_md5 = 0x0001
     case tls_rsa_with_null_sha = 0x0002

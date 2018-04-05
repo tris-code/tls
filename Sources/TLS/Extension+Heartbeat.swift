@@ -10,12 +10,16 @@
 
 import Stream
 
-extension Extension {
-    struct Heartbeat: Equatable {
-        enum Mode: UInt8 {
+public extension Extension {
+    public struct Heartbeat: Equatable {
+        public enum Mode: UInt8 {
             case allowed = 1
         }
-        let mode: Mode
+        public let mode: Mode
+
+        public init(mode: Mode) {
+            self.mode = mode
+        }
     }
 }
 

@@ -11,10 +11,13 @@
 import Stream
 
 extension Extension {
-    struct RenegotiationInfo: Equatable {
+    public struct RenegotiationInfo: Equatable {
         let values: [Any]
 
-        static func ==(lhs: RenegotiationInfo, rhs: RenegotiationInfo) -> Bool {
+        public static func ==(
+            lhs: RenegotiationInfo,
+            rhs: RenegotiationInfo) -> Bool
+        {
             return lhs.values.isEmpty == rhs.values.isEmpty
         }
     }

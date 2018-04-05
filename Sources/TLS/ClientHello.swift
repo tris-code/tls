@@ -10,13 +10,29 @@
 
 import Stream
 
-struct ClientHello: Equatable {
+public struct ClientHello: Equatable {
     let version: ProtocolVersion
     let random: Random
     let sessionId: SessionId // [0..32]
     let ciperSuites: [CiperSuite]
     let compressionMethods: [CompressionMethod]
     let extensions: [Extension]
+
+    public init(
+        version: ProtocolVersion,
+        random: Random,
+        sessionId: SessionId,
+        ciperSuites: [CiperSuite],
+        compressionMethods: [CompressionMethod],
+        extensions: [Extension])
+    {
+        self.version = version
+        self.random = random
+        self.sessionId = sessionId
+        self.ciperSuites = ciperSuites
+        self.compressionMethods = compressionMethods
+        self.extensions = extensions
+    }
 }
 
 extension ClientHello {

@@ -24,7 +24,7 @@ extension Array where Element == Extension {
     }
 }
 
-enum Extension: Equatable {
+public enum Extension: Equatable {
     case serverName(ServerName)
     case supportedGroups(SupportedGroups)
     case ecPointFormats(ECPointFormats)

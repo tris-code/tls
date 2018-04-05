@@ -10,7 +10,7 @@
 
 import Stream
 
-enum ChangeCiperSpec: UInt8 {
+public enum ChangeCiperSpec: UInt8 {
     case `default` = 1
 }
 

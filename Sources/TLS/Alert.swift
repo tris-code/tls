@@ -10,18 +10,23 @@
 
 import Stream
 
-struct Alert: Equatable {
-    let level: Level
-    let description: Description
+public struct Alert: Equatable {
+    public let level: Level
+    public let description: Description
+
+    public init(level: Level, description: Description) {
+        self.level = level
+        self.description = description
+    }
 }
 
 extension Alert {
-    enum Level: UInt8 {
+    public enum Level: UInt8 {
         case warning = 1
         case fatal = 2
     }
 
-    enum Description: UInt8 {
+    public enum Description: UInt8 {
         case closeNotify = 0
         case unexpectedMessage = 10
         case badRecordMAC = 20

@@ -10,6 +10,10 @@
 
 import Stream
 
+public struct Certificate: Equatable {
+
+}
+
 extension StreamReader {
     func read(_ type: UInt24.Type) throws -> UInt24 {
         var value = UInt24(0)
@@ -42,8 +46,7 @@ extension Array where Element == Certificate {
     }
 }
 
-
-struct Certificate: Equatable {
+extension Certificate {
     fileprivate static let headerSize = 3
     init<T: StreamReader>(from stream: T) throws {
         fatalError("not implemented")

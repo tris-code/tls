@@ -12,12 +12,16 @@ import Stream
 import Platform
 
 extension Extension {
-    struct StatusRequest: Equatable {
-        enum CertificateStatus: UInt8 {
+    public struct StatusRequest: Equatable {
+        public enum CertificateStatus: UInt8 {
             case ocsp = 0x01
         }
 
-        let certificateStatus: CertificateStatus?
+        public let certificateStatus: CertificateStatus?
+
+        public init(certificateStatus: CertificateStatus?) {
+            self.certificateStatus = certificateStatus
+        }
     }
 }
 

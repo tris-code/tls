@@ -10,7 +10,7 @@
 
 import Stream
 
-enum CompressionMethod: UInt8 {
+public enum CompressionMethod: UInt8 {
     case none = 0
 }
 

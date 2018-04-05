@@ -8,7 +8,7 @@
  * See CONTRIBUTORS.txt for the list of the project authors
  */
 
-enum TLSError: Error {
+public enum TLSError: Error {
     case invalidRecordContentType
     case invalidHandshake
     case invalidProtocolVerion

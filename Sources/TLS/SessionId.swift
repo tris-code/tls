@@ -10,8 +10,12 @@
 
 import Stream
 
-struct SessionId: Equatable {
-    let data: [UInt8]
+public struct SessionId: Equatable {
+    public let data: [UInt8]
+
+    public init(data: [UInt8]) {
+        self.data = data
+    }
 }
 
 extension SessionId {

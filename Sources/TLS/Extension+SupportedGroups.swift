@@ -12,8 +12,8 @@ import Stream
 
 extension Extension {
     // ex elliptic_curves
-    struct SupportedGroups: Equatable {
-        enum Group: UInt16 {
+    public struct SupportedGroups: Equatable {
+        public enum Group: UInt16 {
             case sect163k1 = 0x0001
             case sect163r1 = 0x0002
             case sect163r2 = 0x0003
@@ -53,7 +53,11 @@ extension Extension {
             case arbitrary_explicit_char2_curves = 0xFF02
         }
 
-        let values: [Group]
+        public let values: [Group]
+
+        public init(values: [Group]) {
+            self.values = values
+        }
     }
 }
 

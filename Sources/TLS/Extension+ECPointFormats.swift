@@ -11,14 +11,18 @@
 import Stream
 
 extension Extension {
-    struct ECPointFormats: Equatable {
-        enum ECPoint: UInt8 {
+    public struct ECPointFormats: Equatable {
+        public enum ECPoint: UInt8 {
             case uncompressed = 0x00
             case ansiX962_compressed_prime = 0x01
             case ansiX962_compressed_char2 = 0x02
         }
 
-        let values: [ECPoint]
+        public let values: [ECPoint]
+
+        public init(values: [ECPoint]) {
+            self.values = values
+        }
     }
 }
 

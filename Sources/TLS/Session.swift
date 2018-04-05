@@ -10,26 +10,26 @@
 
 import Foundation
 
-struct Session {
-    let id: UUID
-    let certificate: [UInt8]?
-    let compressionMethod: CompressionMethod
-    let cipherSpec: CipherSpec
-    let masterSecret: [UInt8] // 48-byte secret shared between the client and server.
-    let isResumable: Bool
+public struct Session {
+    public let id: UUID
+    public let certificate: [UInt8]?
+    public let compressionMethod: CompressionMethod
+    public let cipherSpec: CipherSpec
+    public let masterSecret: [UInt8] // 48-byte secret shared between the client and server.
+    public let isResumable: Bool
 }
 
-struct CipherSpec {
-    let cipher: BulkCipherAlgorithm
-    let mac: MACAlgorithm
-    let type: CipherType
-    let isExportable: Bool
-    let hashSize: Int
-    let keyMaterial: Int
-    let ivSize: Int
+public struct CipherSpec {
+    public let cipher: BulkCipherAlgorithm
+    public let mac: MACAlgorithm
+    public let type: CipherType
+    public let isExportable: Bool
+    public let hashSize: Int
+    public let keyMaterial: Int
+    public let ivSize: Int
 }
 
-enum BulkCipherAlgorithm {
+public enum BulkCipherAlgorithm {
     case none
     case rc4
     case rc2
@@ -39,13 +39,13 @@ enum BulkCipherAlgorithm {
     case fortezza
 }
 
-enum MACAlgorithm {
+public enum MACAlgorithm {
     case none
     case md5
     case sha
 }
 
-enum CipherType {
+public enum CipherType {
     case stream
     case block
 }

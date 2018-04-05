@@ -11,16 +11,25 @@
 import Stream
 
 extension Extension {
-    struct ServerName: Equatable {
-        struct Name: Equatable {
-            enum NameType: UInt8 {
+    public struct ServerName: Equatable {
+        public struct Name: Equatable {
+            public enum NameType: UInt8 {
                 case hostName = 0
             }
-            let type: NameType
-            let value: String
+            public let type: NameType
+            public let value: String
+
+            public init(type: NameType, value: String) {
+                self.type = type
+                self.value = value
+            }
         }
 
-        let values: [Name]
+        public let values: [Name]
+
+        public init(values: [Name]) {
+            self.values = values
+        }
     }
 }
 

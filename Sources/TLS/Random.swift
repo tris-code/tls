@@ -11,15 +11,15 @@
 import Stream
 import Platform
 
-struct Random: Equatable {
-    let time: Int
-    let bytes: [UInt8]
+public struct Random: Equatable {
+    public let time: Int
+    public let bytes: [UInt8]
 
     fileprivate static let bytesSize = 28
 }
 
 extension Random {
-    init() {
+    public init() {
         self.time = Platform.time(nil)
         var bytes = [UInt8](repeating: 0, count: Random.bytesSize)
         arc4random_buf(&bytes, bytes.count)
