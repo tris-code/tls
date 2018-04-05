@@ -253,8 +253,8 @@ class ClientHelloTests: TestCase {
                         ])),
                     .statusRequest(.init(certificateStatus: .ocsp)),
                     .heartbeat(.init(mode: .allowed))
-                ]
-            )
+                ])
+
             try hello.encode(to: stream)
             assertEqual(stream.bytes, bytes)
 
