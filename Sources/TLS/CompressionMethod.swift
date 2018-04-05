@@ -27,6 +27,13 @@ extension Array where Element == CompressionMethod {
 
         self = methods
     }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        try stream.write(UInt8(count))
+        for value in self {
+            try value.encode(to: stream)
+        }
+    }
 }
 
 extension CompressionMethod {
@@ -36,5 +43,9 @@ extension CompressionMethod {
             throw TLSError.invalidCompressionMethod
         }
         self = method
+    }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        try stream.write(rawValue)
     }
 }

@@ -22,4 +22,8 @@ extension ChangeCiperSpec {
         }
         self = spec
     }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        try stream.write(rawValue)
+    }
 }

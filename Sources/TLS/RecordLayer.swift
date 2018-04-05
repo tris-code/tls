@@ -46,6 +46,10 @@ extension RecordLayer.ContentType {
         }
         self = type
     }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        try stream.write(self.rawValue)
+    }
 }
 
 extension RecordLayer {
@@ -67,6 +71,31 @@ extension RecordLayer {
                 return .applicationData(try stream.read(count: length))
             case .heartbeat:
                 return .heartbeat
+            }
+        }
+    }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        func write(_ type: ContentType) throws {
+            try stream.write(type.rawValue)
+        }
+        switch content {
+        case .changeChiperSpec: try write(.changeChiperSpec)
+        case .alert: try write(.alert)
+        case .handshake: try write(.handshake)
+        case .applicationData: try write(.applicationData)
+        case .heartbeat: try write(.heartbeat)
+        }
+
+        try version.encode(to: stream)
+
+        try stream.countingLength(as: UInt16.self) { stream in
+            switch content {
+            case .changeChiperSpec(let value): try value.encode(to: stream)
+            case .alert(let value): try value.encode(to: stream)
+            case .handshake(let value): try value.encode(to: stream)
+            case .applicationData(let value): try stream.write(value)
+            case .heartbeat: break
             }
         }
     }

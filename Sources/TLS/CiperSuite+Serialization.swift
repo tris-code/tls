@@ -25,6 +25,13 @@ extension Array where Element == CiperSuite {
         }
         self = ciperSuites
     }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        try stream.write(UInt16(count << 1).byteSwapped)
+        for value in self {
+            try value.encode(to: stream)
+        }
+    }
 }
 
 extension CiperSuite {
@@ -34,5 +41,9 @@ extension CiperSuite {
             throw TLSError.invalidCiperSuite
         }
         self = ciperSuite
+    }
+
+    func encode<T: StreamWriter>(to stream: T) throws {
+        try stream.write(rawValue.byteSwapped)
     }
 }
