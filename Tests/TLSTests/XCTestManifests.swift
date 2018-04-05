@@ -2,76 +2,96 @@ import XCTest
 
 extension AlertTests {
     static let __allTests = [
-        ("testAlert", testAlert),
+        ("testDecode", testDecode),
+        ("testEncode", testEncode),
     ]
 }
 
 extension ClientHelloTests {
     static let __allTests = [
-        ("testClientHello", testClientHello),
+        ("testDecode", testDecode),
+        ("testEncode", testEncode),
     ]
 }
 
 extension ExtensionECPointFormatsTests {
     static let __allTests = [
-        ("testExtensionECPointFormats", testExtensionECPointFormats),
-        ("testExtensionECPointFormatsType", testExtensionECPointFormatsType),
+        ("testDecode", testDecode),
+        ("testDecodeExtension", testDecodeExtension),
+        ("testEncode", testEncode),
+        ("testEncodeExtension", testEncodeExtension),
     ]
 }
 
 extension ExtensionHeartbeatTests {
     static let __allTests = [
-        ("testExtensionHeartbeat", testExtensionHeartbeat),
-        ("testExtensionHeartbeatType", testExtensionHeartbeatType),
+        ("testDecode", testDecode),
+        ("testDecodeExtension", testDecodeExtension),
+        ("testEncode", testEncode),
+        ("testEncodeExtension", testEncodeExtension),
     ]
 }
 
 extension ExtensionRenegotiationInfoTests {
     static let __allTests = [
-        ("testExtensionRenegotiationInfo", testExtensionRenegotiationInfo),
-        ("testExtensionRenegotiationInfoType", testExtensionRenegotiationInfoType),
+        ("testDecode", testDecode),
+        ("testDecodeExtension", testDecodeExtension),
+        ("testEncode", testEncode),
+        ("testEncodeExtension", testEncodeExtension),
     ]
 }
 
 extension ExtensionServerNameTests {
     static let __allTests = [
-        ("testExtensionServerName", testExtensionServerName),
-        ("testExtensionServerNameName", testExtensionServerNameName),
-        ("testExtensionServerNameType", testExtensionServerNameType),
+        ("testDecode", testDecode),
+        ("testDecodeExtension", testDecodeExtension),
+        ("testDecodeName", testDecodeName),
+        ("testEncode", testEncode),
+        ("testEncodeExtension", testEncodeExtension),
+        ("testEncodeName", testEncodeName),
     ]
 }
 
 extension ExtensionSessionTicketTests {
     static let __allTests = [
-        ("testExtensionSessionTicketEmpty", testExtensionSessionTicketEmpty),
-        ("testExtensionSessionTicketEmptyRandom", testExtensionSessionTicketEmptyRandom),
+        ("testDecodeEmpty", testDecodeEmpty),
+        ("testDecodeEmptyRandom", testDecodeEmptyRandom),
+        ("testEncodeEmpty", testEncodeEmpty),
+        ("testEncodeEmptyRandom", testEncodeEmptyRandom),
     ]
 }
 
 extension ExtensionSignatureAlgorithmsTests {
     static let __allTests = [
-        ("testExtensionSignatureAlgorithms", testExtensionSignatureAlgorithms),
-        ("testExtensionSignatureAlgorithmsType", testExtensionSignatureAlgorithmsType),
+        ("testDecode", testDecode),
+        ("testDecodeExtension", testDecodeExtension),
+        ("testEncode", testEncode),
+        ("testEncodeExtension", testEncodeExtension),
     ]
 }
 
 extension ExtensionStatusRequestTests {
     static let __allTests = [
-        ("testExtensionStatusRequest", testExtensionStatusRequest),
-        ("testExtensionStatusRequestType", testExtensionStatusRequestType),
+        ("testDecode", testDecode),
+        ("testDecodeExtension", testDecodeExtension),
+        ("testEncode", testEncode),
+        ("testEncodeExtension", testEncodeExtension),
     ]
 }
 
 extension ExtensionSupportedGroupsTests {
     static let __allTests = [
-        ("testExtensionSupportedGroups", testExtensionSupportedGroups),
-        ("testExtensionSupportedGroupsType", testExtensionSupportedGroupsType),
+        ("testDecode", testDecode),
+        ("testDecodeExtension", testDecodeExtension),
+        ("testEncode", testEncode),
+        ("testEncodeExtension", testEncodeExtension),
     ]
 }
 
 extension HandshakeTests {
     static let __allTests = [
-        ("testHandshake", testHandshake),
+        ("testDecode", testDecode),
+        ("testEncode", testEncode),
     ]
 }
 
@@ -84,13 +104,15 @@ extension RandomTests {
 
 extension RecordLayerTests {
     static let __allTests = [
-        ("testRecordLayer", testRecordLayer),
+        ("testDecode", testDecode),
+        ("testEncode", testEncode),
     ]
 }
 
 extension ServerHelloTests {
     static let __allTests = [
-        ("testServerHello", testServerHello),
+        ("testDecode", testDecode),
+        ("testEncode", testEncode),
     ]
 }
 
