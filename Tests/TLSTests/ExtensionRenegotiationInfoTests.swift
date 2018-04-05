@@ -16,22 +16,18 @@ class ExtensionRenegotiationInfoTests: TestCase {
     typealias RenegotiationInfo = Extension.RenegotiationInfo
 
     func testExtensionRenegotiationInfo() {
-        do {
+        scope {
             let stream = InputByteStream([0x00])
             let result = try Extension.RenegotiationInfo(from: stream)
             assertEqual(result, RenegotiationInfo(values: []))
-        } catch {
-            fail(String(describing: error))
         }
     }
 
     func testExtensionRenegotiationInfoType() {
-        do {
+        scope {
             let stream = InputByteStream([0xff, 0x01, 0x00, 0x01, 0x00])
             let result = try Extension(from: stream)
-            assertEqual(result, .renegotiationInfo(RenegotiationInfo(values: [])))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .renegotiationInfo(.init(values: [])))
         }
     }
 }

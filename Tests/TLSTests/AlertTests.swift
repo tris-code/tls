@@ -14,13 +14,11 @@ import Stream
 
 class AlertTests: TestCase {
     func testAlert() {
-        do {
+        scope {
             let stream = InputByteStream([0x01, 0x00])
             let alert = try Alert(from: stream)
             assertEqual(alert.level, .warning)
             assertEqual(alert.description, .closeNotify)
-        } catch {
-            fail(String(describing: error))
         }
     }
 }

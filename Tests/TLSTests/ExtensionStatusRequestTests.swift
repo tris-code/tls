@@ -14,22 +14,19 @@ import Stream
 
 class ExtensionStatusRequestTests: TestCase {
     func testExtensionStatusRequest() {
-        do {
+        scope {
             let stream = InputByteStream([0x01, 0x00, 0x00, 0x00, 0x00])
             let result = try Extension.StatusRequest(from: stream)
-            assertEqual(result, Extension.StatusRequest(certificateStatus: .ocsp))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .init(certificateStatus: .ocsp))
         }
     }
 
     func testExtensionStatusRequestType() {
-        do {
-            let stream = InputByteStream([0x00, 0x05, 0x00, 0x05, 0x01, 0x00, 0x00, 0x00, 0x00])
+        scope {
+            let stream = InputByteStream(
+                [0x00, 0x05, 0x00, 0x05, 0x01, 0x00, 0x00, 0x00, 0x00])
             let result = try Extension(from: stream)
-            assertEqual(result, .statusRequest(Extension.StatusRequest(certificateStatus: .ocsp)))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .statusRequest(.init(certificateStatus: .ocsp)))
         }
     }
 }

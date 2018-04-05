@@ -14,14 +14,12 @@ import Stream
 
 class RecordLayerTests: TestCase {
     func testRecordLayer() {
-        do {
+        scope {
             let stream = InputByteStream([0x18, 0x03, 0x01, 0x00, 0x00])
             let recordLayer = try RecordLayer(from: stream)
             assertEqual(
                 recordLayer,
-                RecordLayer(version: .tls10, content: .heartbeat))
-        } catch {
-            fail(String(describing: error))
+                .init(version: .tls10, content: .heartbeat))
         }
     }
 }

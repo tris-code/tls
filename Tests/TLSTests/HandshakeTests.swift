@@ -14,12 +14,10 @@ import Stream
 
 class HandshakeTests: TestCase {
     func testHandshake() {
-        do {
+        scope {
             let stream = InputByteStream([0x0e, 0x00, 0x00, 0x00])
             let handshake = try Handshake(from: stream)
             assertEqual(handshake, .serverHelloDone)
-        } catch {
-            fail(String(describing: error))
         }
     }
 }

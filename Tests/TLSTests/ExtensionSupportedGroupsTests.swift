@@ -35,12 +35,10 @@ class ExtensionSupportedGroupsTests: TestCase {
                               0x00, 0x1a, 0x00, 0x16, 0x00, 0x0e, 0x00, 0x0d,
                               0x00, 0x0b, 0x00, 0x0c, 0x00, 0x09, 0x00, 0x0a]
 
-        do {
+        scope {
             let stream = InputByteStream(bytes)
             let result = try Extension.SupportedGroups(from: stream)
-            assertEqual(result, Extension.SupportedGroups(values: expectedGroups))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .init(values: expectedGroups))
         }
     }
 
@@ -50,12 +48,10 @@ class ExtensionSupportedGroupsTests: TestCase {
                               0x00, 0x1a, 0x00, 0x16, 0x00, 0x0e, 0x00, 0x0d,
                               0x00, 0x0b, 0x00, 0x0c, 0x00, 0x09, 0x00, 0x0a]
 
-        do {
+        scope {
             let stream = InputByteStream(bytes)
             let result = try Extension(from: stream)
-            assertEqual(result, .supportedGroups(Extension.SupportedGroups(values: expectedGroups)))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .supportedGroups(.init(values: expectedGroups)))
         }
     }
 }

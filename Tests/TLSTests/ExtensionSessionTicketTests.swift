@@ -14,22 +14,20 @@ import Stream
 
 class ExtensionSessionTicketTests: TestCase {
     func testExtensionSessionTicketEmpty() {
-        do {
+        scope {
             let stream = InputByteStream([0x00, 0x23, 0x00, 0x00])
             let result = try Extension(from: stream)
-            assertEqual(result, .sessionTicket(Extension.SessionTicket(data: [])))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .sessionTicket(.init(data: [])))
         }
     }
 
     func testExtensionSessionTicketEmptyRandom() {
-        do {
-            let stream = InputByteStream([0x00, 0x23, 0x00, 0x05, 0xFF, 0xA3, 0x7B, 0x04, 0x33])
+        scope {
+            let stream = InputByteStream(
+                [0x00, 0x23, 0x00, 0x05, 0xFF, 0xA3, 0x7B, 0x04, 0x33])
             let result = try Extension(from: stream)
-            assertEqual(result, .sessionTicket(Extension.SessionTicket(data: [0xFF, 0xA3, 0x7B, 0x04, 0x33])))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .sessionTicket(
+                .init(data: [0xFF, 0xA3, 0x7B, 0x04, 0x33])))
         }
     }
 }

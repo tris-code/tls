@@ -14,22 +14,18 @@ import Stream
 
 class ExtensionHeartbeatTests: TestCase {
     func testExtensionHeartbeat() {
-        do {
+        scope {
             let stream = InputByteStream([0x01])
             let result = try Extension.Heartbeat(from: stream)
-            assertEqual(result, Extension.Heartbeat(mode: .allowed))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .init(mode: .allowed))
         }
     }
 
     func testExtensionHeartbeatType() {
-        do {
+        scope {
             let stream = InputByteStream([0x00, 0x0f, 0x00, 0x01, 0x01])
             let result = try Extension(from: stream)
-            assertEqual(result, .heartbeat(Extension.Heartbeat(mode: .allowed)))
-        } catch {
-            fail(String(describing: error))
+            assertEqual(result, .heartbeat(.init(mode: .allowed)))
         }
     }
 }
