@@ -55,6 +55,8 @@ extension RecordLayer {
         self.version = try ProtocolVersion(from: stream)
 
         let length = Int(try stream.read(UInt16.self).byteSwapped)
+        // TODO: avoid copying, plaease read NOTE in this extension
+        let stream = try InputByteStream(from: stream, byteCount: length)
 
         switch type {
         case .changeChiperSpec:
