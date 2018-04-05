@@ -10,7 +10,7 @@
 
 import Stream
 
-enum Handshake: Equatable {
+public enum Handshake: Equatable {
     case helloRequest
     case clientHello(ClientHello)
     case serverHello(ServerHello)

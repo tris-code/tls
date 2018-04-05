@@ -15,7 +15,7 @@ extension Extension {
         public let values: [Algorithm]
 
         public struct Algorithm: Equatable {
-            public enum HashType: UInt8 {
+            public enum Hash: UInt8 {
                 case none   = 0x00
                 case md5    = 0x01
                 case sha1   = 0x02
@@ -25,15 +25,24 @@ extension Extension {
                 case sha512 = 0x06
             }
 
-            public enum SignatureType: UInt8 {
+            public enum Signature: UInt8 {
                 case anonymous = 0x00
                 case rsa       = 0x01
                 case dsa       = 0x02
                 case ecdsa     = 0x03
             }
 
-            public let hash: HashType
-            public let signature: SignatureType
+            public let hash: Hash
+            public let signature: Signature
+
+            public init(hash: Hash, signature: Signature) {
+                self.hash = hash
+                self.signature = signature
+            }
+        }
+
+        public init(values: [Algorithm]) {
+            self.values = values
         }
     }
 }
@@ -48,8 +57,8 @@ extension Extension.SignatureAlgorithms {
             let rawHash = try stream.read(UInt8.self)
             let rawSignature = try stream.read(UInt8.self)
             guard
-                let hash = Algorithm.HashType(rawValue: rawHash),
-                let signature = Algorithm.SignatureType(rawValue: rawSignature)
+                let hash = Algorithm.Hash(rawValue: rawHash),
+                let signature = Algorithm.Signature(rawValue: rawSignature)
             else {
                 throw TLSError.invalidExtension
             }
