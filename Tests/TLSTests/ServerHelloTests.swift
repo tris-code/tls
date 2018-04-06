@@ -83,7 +83,7 @@ class ServerHelloTests: TestCase {
 
             assertEqual(
                 hello.extensions[safe: 4],
-                .statusRequest(.init(certificateStatus: .none)))
+                .statusRequest(.none))
 
             assertEqual(
                 hello.extensions[safe: 5],
@@ -113,7 +113,7 @@ class ServerHelloTests: TestCase {
                         .ansiX962_compressed_prime,
                         .ansiX962_compressed_char2]),
                     .sessionTicket(.init(data: [])),
-                    .statusRequest(.init(certificateStatus: .none)),
+                    .statusRequest(.none),
                     .heartbeat(.init(mode: .allowed))
                 ])
 

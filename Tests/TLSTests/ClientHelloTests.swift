@@ -161,7 +161,7 @@ class ClientHelloTests: TestCase {
 
             assertEqual(
                 hello.extensions[safe: 5],
-                .statusRequest(.init(certificateStatus: .ocsp)))
+                .statusRequest(.ocsp(.init())))
 
             assertEqual(
                 hello.extensions[safe: 6],
@@ -247,7 +247,7 @@ class ClientHelloTests: TestCase {
                         .init(hash: .sha1, signature: .dsa),
                         .init(hash: .sha1, signature: .ecdsa),
                         ]),
-                    .statusRequest(.init(certificateStatus: .ocsp)),
+                    .statusRequest(.ocsp(.init())),
                     .heartbeat(.init(mode: .allowed))
                 ])
 

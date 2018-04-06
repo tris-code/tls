@@ -77,7 +77,7 @@ class RecordLayerTests: TestCase {
                         .ansiX962_compressed_prime,
                         .ansiX962_compressed_char2]),
                     .sessionTicket(.init(data: [])),
-                    .statusRequest(.init(certificateStatus: .none)),
+                    .statusRequest(.none),
                     .heartbeat(.init(mode: .allowed))
                 ]))))
         }
@@ -106,7 +106,7 @@ class RecordLayerTests: TestCase {
                             .ansiX962_compressed_prime,
                             .ansiX962_compressed_char2]),
                         .sessionTicket(.init(data: [])),
-                        .statusRequest(.init(certificateStatus: .none)),
+                        .statusRequest(.none),
                         .heartbeat(.init(mode: .allowed))
                     ]))))
             try recordLayer.encode(to: stream)
