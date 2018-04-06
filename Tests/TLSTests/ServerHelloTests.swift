@@ -64,7 +64,7 @@ class ServerHelloTests: TestCase {
 
             assertEqual(
                 hello.extensions[safe: 0],
-                .serverName(.init(values: [])))
+                .serverName([]))
 
             assertEqual(
                 hello.extensions[safe: 1],
@@ -72,10 +72,10 @@ class ServerHelloTests: TestCase {
 
             assertEqual(
                 hello.extensions[safe: 2],
-                .ecPointFormats(.init(values: [
+                .ecPointFormats([
                     .uncompressed,
                     .ansiX962_compressed_prime,
-                    .ansiX962_compressed_char2])))
+                    .ansiX962_compressed_char2]))
 
             assertEqual(
                 hello.extensions[safe: 3],
@@ -106,12 +106,12 @@ class ServerHelloTests: TestCase {
                 ciperSuite: .tls_ecdhe_rsa_with_aes_128_gcm_sha256,
                 compressionMethod: .none,
                 extensions: [
-                    .serverName(.init(values: [])),
+                    .serverName([]),
                     .renegotiationInfo(.init(renegotiatedConnection: [])),
-                    .ecPointFormats(.init(values: [
+                    .ecPointFormats([
                         .uncompressed,
                         .ansiX962_compressed_prime,
-                        .ansiX962_compressed_char2])),
+                        .ansiX962_compressed_char2]),
                     .sessionTicket(.init(data: [])),
                     .statusRequest(.init(certificateStatus: .none)),
                     .heartbeat(.init(mode: .allowed))

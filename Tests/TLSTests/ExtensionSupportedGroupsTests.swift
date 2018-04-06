@@ -13,7 +13,9 @@ import Stream
 @testable import TLS
 
 class ExtensionSupportedGroupsTests: TestCase {
-    let groups: [Extension.SupportedGroups.Group] = [
+    typealias SupportedGroup = Extension.SupportedGroup
+
+    let groups: [SupportedGroup] = [
         .secp256r1,
         .secp521r1,
         .brainpoolP512r1,
@@ -36,8 +38,8 @@ class ExtensionSupportedGroupsTests: TestCase {
                  0x00, 0x19, 0x00, 0x1c, 0x00, 0x1b, 0x00, 0x18,
                  0x00, 0x1a, 0x00, 0x16, 0x00, 0x0e, 0x00, 0x0d,
                  0x00, 0x0b, 0x00, 0x0c, 0x00, 0x09, 0x00, 0x0a])
-            let result = try Extension.SupportedGroups(from: stream)
-            assertEqual(result, .init(values: groups))
+            let result = try [SupportedGroup](from: stream)
+            assertEqual(result, groups)
         }
     }
 
@@ -49,7 +51,7 @@ class ExtensionSupportedGroupsTests: TestCase {
                  0x00, 0x1a, 0x00, 0x16, 0x00, 0x0e, 0x00, 0x0d,
                  0x00, 0x0b, 0x00, 0x0c, 0x00, 0x09, 0x00, 0x0a])
             let result = try Extension(from: stream)
-            assertEqual(result, .supportedGroups(.init(values: groups)))
+            assertEqual(result, .supportedGroups(groups))
         }
     }
 
@@ -61,8 +63,7 @@ class ExtensionSupportedGroupsTests: TestCase {
                  0x00, 0x1a, 0x00, 0x16, 0x00, 0x0e, 0x00, 0x0d,
                  0x00, 0x0b, 0x00, 0x0c, 0x00, 0x09, 0x00, 0x0a]
             let stream = OutputByteStream()
-            let supportedGroups = Extension.SupportedGroups(values: groups)
-            try supportedGroups.encode(to: stream)
+            try groups.encode(to: stream)
             assertEqual(stream.bytes, expected)
         }
     }
@@ -75,8 +76,7 @@ class ExtensionSupportedGroupsTests: TestCase {
                  0x00, 0x1a, 0x00, 0x16, 0x00, 0x0e, 0x00, 0x0d,
                  0x00, 0x0b, 0x00, 0x0c, 0x00, 0x09, 0x00, 0x0a]
             let stream = OutputByteStream()
-            let supportedGroupsExtension = Extension.supportedGroups(
-                .init(values: groups))
+            let supportedGroupsExtension = Extension.supportedGroups(groups)
             try supportedGroupsExtension.encode(to: stream)
             assertEqual(stream.bytes, expected)
         }

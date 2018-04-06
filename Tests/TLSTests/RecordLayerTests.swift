@@ -70,12 +70,12 @@ class RecordLayerTests: TestCase {
                 ciperSuite: .tls_ecdhe_rsa_with_aes_128_gcm_sha256,
                 compressionMethod: .none,
                 extensions: [
-                    .serverName(.init(values: [])),
+                    .serverName([]),
                     .renegotiationInfo(.init(renegotiatedConnection: [])),
-                    .ecPointFormats(.init(values: [
+                    .ecPointFormats([
                         .uncompressed,
                         .ansiX962_compressed_prime,
-                        .ansiX962_compressed_char2])),
+                        .ansiX962_compressed_char2]),
                     .sessionTicket(.init(data: [])),
                     .statusRequest(.init(certificateStatus: .none)),
                     .heartbeat(.init(mode: .allowed))
@@ -99,12 +99,12 @@ class RecordLayerTests: TestCase {
                     ciperSuite: .tls_ecdhe_rsa_with_aes_128_gcm_sha256,
                     compressionMethod: .none,
                     extensions: [
-                        .serverName(.init(values: [])),
+                        .serverName([]),
                         .renegotiationInfo(.init()),
-                        .ecPointFormats(.init(values: [
+                        .ecPointFormats([
                             .uncompressed,
                             .ansiX962_compressed_prime,
-                            .ansiX962_compressed_char2])),
+                            .ansiX962_compressed_char2]),
                         .sessionTicket(.init(data: [])),
                         .statusRequest(.init(certificateStatus: .none)),
                         .heartbeat(.init(mode: .allowed))
