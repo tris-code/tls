@@ -10,8 +10,9 @@
 
 public enum TLSError: Error {
     case invalidRecordContentType
-    case invalidHandshake
     case invalidProtocolVerion
+    case invalidHandshake
+    case invalidCertificateStatus
     case invalidCiperSuitesLength
     case invalidCiperSuite
     case invalidCompressionMethod

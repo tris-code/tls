@@ -59,7 +59,7 @@ extension Extension.OCSPStatusRequest {
 
 extension Extension.StatusRequest {
     init<T: StreamReader>(from stream: T) throws {
-        let type = try Certificate.StatusType(from: stream)
+        let type = try Certificate.Status.RawType(from: stream)
         switch type {
         case .ocsp: self = .ocsp(try Extension.OCSPStatusRequest(from: stream))
         }
@@ -70,7 +70,7 @@ extension Extension.StatusRequest {
         case .none:
             return
         case .ocsp(let request):
-            try Certificate.StatusType.ocsp.encode(to: stream)
+            try Certificate.Status.RawType.ocsp.encode(to: stream)
             try request.encode(to: stream)
         }
     }
