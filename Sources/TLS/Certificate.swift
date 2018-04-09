@@ -15,7 +15,7 @@ public struct Certificate: Equatable {
 }
 
 extension Array where Element == Certificate {
-    init<T: StreamReader>(from stream: T) throws {
+    init(from stream: StreamReader) throws {
         let length = Int(try stream.read(UInt24.self))
         self = try stream.withLimitedStream(by: length) { stream in
             var certificates = [Certificate]()
@@ -26,7 +26,7 @@ extension Array where Element == Certificate {
         }
     }
 
-    func encode<T: StreamWriter>(to stream: T) throws {
+    func encode(to stream: StreamWriter) throws {
         guard count > 0 else {
             return
         }
@@ -39,12 +39,12 @@ extension Array where Element == Certificate {
 }
 
 extension Certificate {
-    init<T: StreamReader>(from stream: T) throws {
+    init(from stream: StreamReader) throws {
         let length = Int(try stream.read(UInt24.self))
         self.bytes = try stream.read(count: length)
     }
 
-    func encode<T: StreamWriter>(to stream: T) throws {
+    func encode(to stream: StreamWriter) throws {
         try stream.countingLength(as: UInt24.self) { stream in
             try stream.write(bytes)
         }
