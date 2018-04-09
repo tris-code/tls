@@ -32,7 +32,7 @@ extension StreamWriter {
     {
         let output = OutputByteStream()
         try task(output)
-        try write(T(output.bytes.count).byteSwapped)
+        try write(T(output.bytes.count))
         try write(output.bytes)
     }
 
@@ -43,7 +43,7 @@ extension StreamWriter {
     {
         let output = OutputByteStream()
         try task(output)
-        try write(UInt24(UInt(output.bytes.count)).byteSwapped)
+        try write(UInt24(UInt(output.bytes.count)))
         try write(output.bytes)
     }
 }

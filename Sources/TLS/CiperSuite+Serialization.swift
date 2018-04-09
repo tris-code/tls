@@ -12,7 +12,7 @@ import Stream
 
 extension Array where Element == CiperSuite {
     init<T: StreamReader>(from stream: T) throws {
-        let length = Int(try stream.read(UInt16.self).byteSwapped)
+        let length = Int(try stream.read(UInt16.self))
         guard length % 2 == 0 else {
             throw TLSError.invalidCiperSuitesLength
         }
@@ -30,7 +30,7 @@ extension Array where Element == CiperSuite {
         guard count > 0 else {
             return
         }
-        try stream.write(UInt16(count << 1).byteSwapped)
+        try stream.write(UInt16(count << 1))
         for value in self {
             try value.encode(to: stream)
         }
@@ -39,7 +39,7 @@ extension Array where Element == CiperSuite {
 
 extension CiperSuite {
     init<T: StreamReader>(from stream: T) throws {
-        let rawCiperSuite = try stream.read(UInt16.self).byteSwapped
+        let rawCiperSuite = try stream.read(UInt16.self)
         guard let ciperSuite = CiperSuite(rawValue: rawCiperSuite) else {
             throw TLSError.invalidCiperSuite
         }
@@ -47,6 +47,6 @@ extension CiperSuite {
     }
 
     func encode<T: StreamWriter>(to stream: T) throws {
-        try stream.write(rawValue.byteSwapped)
+        try stream.write(rawValue)
     }
 }
