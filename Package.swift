@@ -21,6 +21,9 @@ let package = Package(
             url: "https://github.com/tris-foundation/platform.git",
             .branch("master")),
         .package(
+            url: "https://github.com/tris-foundation/crypto.git",
+            .branch("master")),
+        .package(
             url: "https://github.com/tris-foundation/stream.git",
             .branch("master")),
         .package(
@@ -28,7 +31,7 @@ let package = Package(
             .branch("master"))
     ],
     targets: [
-        .target(name: "TLS", dependencies: ["Platform", "Stream"]),
+        .target(name: "TLS", dependencies: ["Platform", "Crypto", "Stream"]),
         .testTarget(name: "TLSTests", dependencies: ["TLS", "Test"])
     ]
 )
