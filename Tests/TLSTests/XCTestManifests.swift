@@ -116,16 +116,6 @@ extension ServerHelloTests {
     ]
 }
 
-extension UInt24Tests {
-    static let __allTests = [
-        ("testBytesSwapped", testBytesSwapped),
-        ("testDescription", testDescription),
-        ("testUInt24", testUInt24),
-        ("testUInt24Max", testUInt24Max),
-        ("testUInt24Overflow", testUInt24Overflow),
-    ]
-}
-
 #if !os(macOS)
 public func __allTests() -> [XCTestCaseEntry] {
     return [
@@ -143,7 +133,6 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(RandomTests.__allTests),
         testCase(RecordLayerTests.__allTests),
         testCase(ServerHelloTests.__allTests),
-        testCase(UInt24Tests.__allTests),
     ]
 }
 #endif
