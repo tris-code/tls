@@ -9,6 +9,7 @@
  *                                                                            *
  ******************************************************************************/
 
+import Crypto
 import Stream
 
 public enum Handshake: Equatable {
@@ -17,7 +18,7 @@ public enum Handshake: Equatable {
     case serverHello(ServerHello)
     case helloVerifyRequest
     case newSessionTicket(NewSessionTicket)
-    case certificate([Certificate])
+    case certificate([X509.Certificate])
     case serverKeyExchange(ServerKeyExchange)
     case certificateRequest
     case serverHelloDone
@@ -75,7 +76,7 @@ extension Handshake {
             case .newSessionTicket:
                 return .newSessionTicket(try NewSessionTicket(from: stream))
             case .certificate:
-                return .certificate(try [Certificate](from: stream))
+                return .certificate(try [X509.Certificate](from: stream))
             case .serverKeyExchange:
                 return .serverKeyExchange(try ServerKeyExchange(from: stream))
             case .clientKeyExchange:
@@ -110,9 +111,9 @@ extension Handshake {
             case .clientHello(let value): try value.encode(to: stream)
             case .serverHello(let value): try value.encode(to: stream)
             case .newSessionTicket(let value): try value.encode(to: stream)
+            case .certificate(let value): try value.encode(to: stream)
             case .serverKeyExchange(let value): try value.encode(to: stream)
             case .clientKeyExchange(let value): try value.encode(to: stream)
-            case .certificate(let value): try value.encode(to: stream)
             case .serverHelloDone: return
             default: fatalError("not implemented")
             }
