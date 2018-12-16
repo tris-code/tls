@@ -14,7 +14,6 @@ import Stream
 @testable import TLS
 
 class ClientHelloTests: TestCase {
-    @nonobjc
     let bytes: [UInt8] = [
         // TLS 1.2
         0x03, 0x03,
@@ -61,7 +60,7 @@ class ClientHelloTests: TestCase {
         0x00,
         // heartbeat
         0x00, 0x0f, 0x00, 0x01, 0x01]
-    
+
     func testDecode() {
         scope {
             let stream = InputByteStream(bytes)

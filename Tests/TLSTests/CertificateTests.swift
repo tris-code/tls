@@ -14,7 +14,7 @@ import Stream
 @testable import TLS
 
 class CertificateTests: TestCase {
-    @nonobjc let header: [UInt8] = [
+    let header: [UInt8] = [
         // handshake
         0x16,
         // tls 1.2
@@ -31,7 +31,7 @@ class CertificateTests: TestCase {
 
     /*  Certificates */
 
-    @nonobjc let certificate1: [UInt8] = [
+    let certificate1: [UInt8] = [
         // length: 2035
         0x00, 0x07, 0xf3,
         // certificate
@@ -293,7 +293,7 @@ class CertificateTests: TestCase {
         0x5b, 0x8b
     ]
 
-    @nonobjc let certificate2: [UInt8] = [
+    let certificate2: [UInt8] = [
         // length: 1196
         0x00, 0x04, 0xac,
         // certificate
@@ -450,7 +450,7 @@ class CertificateTests: TestCase {
         0x77
     ]
 
-    @nonobjc let certificate3: [UInt8] = [
+    let certificate3: [UInt8] = [
         // length: 1208
         0x00, 0x04, 0xb8,
         // certificate

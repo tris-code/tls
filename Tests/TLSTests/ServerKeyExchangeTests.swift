@@ -14,7 +14,6 @@ import Stream
 @testable import TLS
 
 class ServerKeyExchangeTests: TestCase {
-    @nonobjc
     let bytes: [UInt8] = [
         // handshake
         0x16,
