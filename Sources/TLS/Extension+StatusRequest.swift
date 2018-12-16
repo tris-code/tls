@@ -18,6 +18,10 @@ extension Extension {
     public enum StatusRequest: Equatable {
         case none
         case ocsp(OCSPStatusRequest)
+
+        enum RawType: UInt8 {
+            case ocsp = 0x01
+        }
     }
 
     public struct OCSPStatusRequest: Equatable {
@@ -60,9 +64,11 @@ extension Extension.OCSPStatusRequest {
 
 extension Extension.StatusRequest {
     init(from stream: StreamReader) throws {
-        let type = try Certificate.Status.RawType(from: stream)
+        guard let type = try RawType(from: stream) else {
+            throw TLSError.invalidExtension
+        }
         switch type {
-        case .ocsp: self = .ocsp(try Extension.OCSPStatusRequest(from: stream))
+        case .ocsp: self = .ocsp(try .init(from: stream))
         }
     }
 
@@ -71,7 +77,7 @@ extension Extension.StatusRequest {
         case .none:
             return
         case .ocsp(let request):
-            try Certificate.Status.RawType.ocsp.encode(to: stream)
+            try RawType.ocsp.encode(to: stream)
             try request.encode(to: stream)
         }
     }
