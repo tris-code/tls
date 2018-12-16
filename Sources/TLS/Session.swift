@@ -9,7 +9,7 @@
  *                                                                            *
  ******************************************************************************/
 
-import Foundation
+import UUID
 
 public struct Session {
     public let id: UUID

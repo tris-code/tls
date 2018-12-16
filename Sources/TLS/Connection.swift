@@ -9,8 +9,6 @@
  *                                                                            *
  ******************************************************************************/
 
-import Foundation
-
 // https://tools.ietf.org/html/rfc6101#section-5.1
 struct Connection {
     let random: [UInt8]
