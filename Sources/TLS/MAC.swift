@@ -1,14 +1,3 @@
-/******************************************************************************
- *                                                                            *
- * Tris Foundation disclaims copyright to this source code.                   *
- * In place of a legal notice, here is a blessing:                            *
- *                                                                            *
- *     May you do good and not evil.                                          *
- *     May you find forgiveness for yourself and forgive others.              *
- *     May you share freely, never taking more than you give.                 *
- *                                                                            *
- ******************************************************************************/
-
 struct MD5 {
     static let pad1 = [UInt8](repeating: 0x36, count: 48)
     static let pad2 = [UInt8](repeating: 0x5c, count: 48)
