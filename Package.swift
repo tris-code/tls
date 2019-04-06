@@ -8,16 +8,16 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/tris-foundation/platform.git",
+            url: "https://github.com/tris-code/platform.git",
             .branch("master")),
         .package(
-            url: "https://github.com/tris-foundation/crypto.git",
+            url: "https://github.com/tris-code/crypto.git",
             .branch("master")),
         .package(
-            url: "https://github.com/tris-foundation/stream.git",
+            url: "https://github.com/tris-code/stream.git",
             .branch("master")),
         .package(
-            url: "https://github.com/tris-foundation/test.git",
+            url: "https://github.com/tris-code/test.git",
             .branch("master"))
     ],
     targets: [
